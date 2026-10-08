@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>MIDNIGHT PANTRY // 3AM SQUAD HUB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Space+Grotesk:wght@500;700;900&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2' fill='%2339ff14'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Ambient Interactive Background Canvas -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- Floating Ambient Grid Overlay -->
+  <div class="grid-overlay"></div>
+
+  <!-- Top Marquee Ticker -->
+  <div class="marquee-bar">
+    <div class="marquee-track">
+      <span class="marquee-item">MIDNIGHT PANTRY v2.4</span>
+      <span class="marquee-sep">//</span>
+      <span class="marquee-item">ZERO SLEEP HIGH VELOCITY</span>
+      <span class="marquee-sep">//</span>
+      <span class="marquee-item">DIET COKE . MONSTER ULTRA . BLUE LAYS ONLY</span>
+      <span class="marquee-sep">//</span>
+      <span class="marquee-item">SQUAD STATUS: LIVE SYNC</span>
+      <span class="marquee-sep">//</span>
+      <span class="marquee-item">CAFFEINE PROTOCOL ACTIVE</span>
+      <span class="marquee-sep">//</span>
+      <span class="marquee-item">MIDNIGHT PANTRY v2.4</span>
+      <span class="marquee-sep">//</span>
+      <span class="marquee-item">ZERO SLEEP HIGH VELOCITY</span>
+      <span class="marquee-sep">//</span>
+      <span class="marquee-item">DIET COKE . MONSTER ULTRA . BLUE LAYS ONLY</span>
+      <span class="marquee-sep">//</span>
+      <span class="marquee-item">SQUAD STATUS: LIVE SYNC</span>
+      <span class="marquee-sep">//</span>
+      <span class="marquee-item">CAFFEINE PROTOCOL ACTIVE</span>
+      <span class="marquee-sep">//</span>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="app-wrapper">
+
+    <!-- Header / Navbar -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="brand-tag">DEPT. OF SUSTENANCE</div>
+        <h1 class="brand-title">MIDNIGHT<span class="brand-accent">PANTRY</span></h1>
+      </div>
+
+      <div class="header-meta">
+        <!-- Live System Clock & Mode -->
+        <div class="status-chip system-clock-chip">
+          <span class="chip-pulse"></span>
+          <span class="chip-label">SYS_TIME:</span>
+          <span id="live-clock" class="chip-val">00:00:00</span>
+        </div>
+
+        <!-- Audio Toggle Button -->
+        <button id="sfx-toggle-btn" class="util-btn" title="Toggle Sound FX">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+            <path id="sfx-wave-1" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            <path id="sfx-wave-2" d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+          </svg>
+          <span id="sfx-label" class="btn-text">SFX: ON</span>
+        </button>
+
+        <!-- Admin Access Button -->
+        <button id="open-admin-btn" class="admin-trigger-btn">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span id="admin-badge-text">ADMIN LOCKED</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero / Grind Stats Banner -->
+    <section class="hero-stats-panel">
+      <div class="hero-card">
+        <div class="hero-badge">OPERATION: LATE NIGHT GRIND</div>
+        <h2 class="hero-headline">THE HOLY TRINITY OF ALL-NIGHTERS.</h2>
+        <p class="hero-subtext">Stock status verified in real-time. Only three sacred fuel elements allowed in this terminal.</p>
+        
+        <div class="vibe-metrics">
+          <div class="metric-box">
+            <span class="metric-label">CAFFEINE INDEX</span>
+            <div class="metric-meter">
+              <div id="caffeine-bar" class="metric-fill" style="width: 88%;"></div>
+            </div>
+            <span id="caffeine-text" class="metric-value">88% CHARGED</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-label">SQUAD ON DECK</span>
+            <span id="active-squad-count" class="metric-value squad-glow">2 / 3 ACTIVE</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-label">RATION STATUS</span>
+            <span id="total-inventory-status" class="metric-value ration-glow">3/3 IN STOCK</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: SNACK INVENTORY (DIET COKE, MONSTER, BLUE LAYS) -->
+    <section class="section-container">
+      <div class="section-head">
+        <div class="head-left">
+          <span class="section-prefix">// 01</span>
+          <h2 class="section-title">THE TRIAD INVENTORY</h2>
+        </div>
+        <div class="head-right">
+          <span class="tag-pill">CLICK ITEM TO CRACK/POP</span>
+        </div>
+      </div>
+
+      <div class="inventory-grid">
+        
+        <!-- ITEM 1: DIET COKE -->
+        <article class="snack-card diet-coke-card" id="card-diet-coke" data-id="diet-coke">
+          <div class="card-glow-bg"></div>
+          <div class="card-header">
+            <span class="category-pill">CARBONATED RATION</span>
+            <span class="stock-pill status-badge" id="badge-diet-coke">IN STOCK</span>
+          </div>
+
+          <!-- Product Visual Container -->
+          <div class="visual-stage" id="stage-diet-coke" title="Click to pop can!">
+            <div class="stage-particles" id="particles-diet-coke"></div>
+            <!-- Custom Vector Diet Coke Can -->
+            <div class="can-wrapper coke-can">
+              <svg class="product-svg" viewBox="0 0 160 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="silverCanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#b0b5be"/>
+                    <stop offset="15%" stop-color="#f4f5f8"/>
+                    <stop offset="50%" stop-color="#ffffff"/>
+                    <stop offset="85%" stop-color="#cbd0d8"/>
+                    <stop offset="100%" stop-color="#8c929c"/>
+                  </linearGradient>
+                  <linearGradient id="cokeRedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ff1a2a"/>
+                    <stop offset="100%" stop-color="#b5000c"/>
+                  </linearGradient>
+                  <linearGradient id="lidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#e0e4eb"/>
+                    <stop offset="100%" stop-color="#9da3af"/>
+                  </linearGradient>
+                </defs>
+                <!-- Can Shadow -->
+                <ellipse cx="80" cy="285" rx="55" ry="10" fill="#000" opacity="0.4" />
+                <!-- Can Lip Bottom -->
+                <path d="M30 265 C30 280 130 280 130 265 L125 255 L35 255 Z" fill="#8c929c"/>
+                <!-- Can Body -->
+                <rect x="25" y="45" width="110" height="215" rx="10" fill="url(#silverCanGrad)"/>
+                <!-- Bold Diagonal Red Sash -->
+                <path d="M25 90 L135 150 L135 220 L25 160 Z" fill="url(#cokeRedGrad)"/>
+                <!-- Can Rim Top -->
+                <path d="M35 45 C35 32 125 32 125 45 Z" fill="url(#lidGrad)"/>
+                <ellipse cx="80" cy="35" rx="42" ry="12" fill="url(#lidGrad)" stroke="#7a808c" stroke-width="2"/>
+                <!-- Pull Tab -->
+                <ellipse cx="80" cy="34" rx="18" ry="6" fill="#c0c5cc" stroke="#555a64" stroke-width="1.5"/>
+                <circle cx="72" cy="34" r="3" fill="#222"/>
+                <!-- Graphic Typography Inside Can -->
+                <text x="80" y="130" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="22" fill="#111" letter-spacing="2">DIET</text>
+                <text x="80" y="185" text-anchor="middle" font-family="'Syne', sans-serif" font-weight="900" font-style="italic" font-size="34" fill="#ffffff" letter-spacing="3">Coke</text>
+                <text x="80" y="210" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="10" fill="#ffffff" letter-spacing="4">0 CAL // CRITICAL FUEL</text>
+                <!-- Condensation Droplets -->
+                <circle cx="45" cy="80" r="3" fill="#ffffff" opacity="0.8"/>
+                <circle cx="115" cy="110" r="2.5" fill="#ffffff" opacity="0.7"/>
+                <circle cx="40" cy="180" r="3" fill="#ffffff" opacity="0.6"/>
+                <circle cx="120" cy="230" r="4" fill="#ffffff" opacity="0.8"/>
+                <circle cx="100" cy="70" r="2" fill="#ffffff" opacity="0.9"/>
+                <!-- Fizz sparks overlay -->
+                <path d="M30 45 L35 255" stroke="#ffffff" stroke-width="2" opacity="0.6"/>
+                <path d="M125 45 L120 255" stroke="#000000" stroke-width="2" opacity="0.2"/>
+              </svg>
+            </div>
+            <div class="click-hint">CLICK TO FIZZ</div>
+          </div>
+
+          <div class="card-details">
+            <div class="item-title-row">
+              <h3 class="item-name">DIET COKE</h3>
+              <span class="unit-tag">330ML CAN</span>
+            </div>
+            <p class="item-desc">Crisp silver chill, maximum fizz, zero sugar crash. Midnight focus standard issue.</p>
+            
+            <div class="item-meta-grid">
+              <div class="meta-item">
+                <span class="meta-lbl">INVENTORY COUNT</span>
+                <span class="meta-val" id="qty-diet-coke">6 CANS</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-lbl">TEMPERATURE</span>
+                <span class="meta-val temp-val">ICE COLD [3°C]</span>
+              </div>
+            </div>
+
+            <div class="card-action-bar">
+              <button class="interact-action-btn" onclick="triggerSnackInteraction('diet-coke')">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+                </svg>
+                <span>POP CAN FIZZ</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ITEM 2: MONSTER ULTRA -->
+        <article class="snack-card monster-card monster-ultra-card" id="card-monster" data-id="monster">
+          <div class="card-glow-bg"></div>
+          <div class="card-header">
+            <span class="category-pill">ZERO SUGAR // ULTRA FUEL</span>
+            <span class="stock-pill status-badge" id="badge-monster">IN STOCK</span>
+          </div>
+
+          <!-- Product Visual Container -->
+          <div class="visual-stage" id="stage-monster" title="Click to crack Monster Ultra!">
+            <div class="stage-particles" id="particles-monster"></div>
+            <!-- Custom Vector Monster Ultra White Can -->
+            <div class="can-wrapper monster-can ultra-can">
+              <svg class="product-svg" viewBox="0 0 160 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <!-- Ultra Frosted Matte White Gradient -->
+                  <linearGradient id="ultraCanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#eaedf3"/>
+                    <stop offset="18%" stop-color="#ffffff"/>
+                    <stop offset="55%" stop-color="#f8fafc"/>
+                    <stop offset="85%" stop-color="#e2e7f0"/>
+                    <stop offset="100%" stop-color="#cfd6e4"/>
+                  </linearGradient>
+                  <!-- Textured Silver Metallic Claw Gradient -->
+                  <linearGradient id="silverClawGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="35%" stop-color="#cad2df"/>
+                    <stop offset="70%" stop-color="#8c99ab"/>
+                    <stop offset="100%" stop-color="#b2becd"/>
+                  </linearGradient>
+                  <!-- Icy Frost Glow Filter -->
+                  <filter id="ultraFrostGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#a5d8ff" flood-opacity="0.6"/>
+                  </filter>
+                  <linearGradient id="ultraRimGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#b0b8c6"/>
+                    <stop offset="50%" stop-color="#eef2f7"/>
+                    <stop offset="100%" stop-color="#8f99a8"/>
+                  </linearGradient>
+                </defs>
+                <!-- Can Shadow -->
+                <ellipse cx="80" cy="285" rx="55" ry="10" fill="#000" opacity="0.45" />
+                <!-- Can Lip Bottom -->
+                <path d="M30 265 C30 280 130 280 130 265 L125 255 L35 255 Z" fill="#9ba5b5"/>
+                <!-- Can Body (Frosted Matte White) -->
+                <rect x="25" y="45" width="110" height="215" rx="10" fill="url(#ultraCanGrad)" stroke="#b5bfcf" stroke-width="1.2"/>
+                
+                <!-- Laser-Etched Baroque / Filigree Damask Texture Pattern on Ultra Can -->
+                <g opacity="0.4" stroke="#7e8c9f" stroke-width="0.8" fill="none">
+                  <path d="M35 65 Q45 75 40 90 Q34 105 52 110 Q60 115 44 125"/>
+                  <path d="M125 65 Q115 75 120 90 Q126 105 108 110 Q100 115 116 125"/>
+                  <path d="M35 170 Q48 165 42 185 Q34 202 52 215"/>
+                  <path d="M125 170 Q112 165 118 185 Q126 202 108 215"/>
+                  <circle cx="48" cy="82" r="1.8" fill="#7e8c9f"/>
+                  <circle cx="112" cy="82" r="1.8" fill="#7e8c9f"/>
+                  <circle cx="46" cy="195" r="1.8" fill="#7e8c9f"/>
+                  <circle cx="114" cy="195" r="1.8" fill="#7e8c9f"/>
+                </g>
+
+                <!-- Can Rim Top (Sleek Silver) -->
+                <ellipse cx="80" cy="35" rx="42" ry="12" fill="url(#ultraRimGrad)" stroke="#808c9d" stroke-width="1.5"/>
+                <!-- Silver Pull Tab -->
+                <ellipse cx="80" cy="34" rx="18" ry="6" fill="#cad1dc" stroke="#687383" stroke-width="1.2"/>
+                <circle cx="72" cy="34" r="3" fill="#2d3748"/>
+                
+                <!-- THE ICONIC 3 MONSTER CLAWS IN EMBOSSED SILVER & ICY FROST -->
+                <g filter="url(#ultraFrostGlow)">
+                  <!-- Left Claw -->
+                  <path d="M54 110 Q50 150 56 195 L61 190 Q58 150 63 115 Z" fill="url(#silverClawGrad)" stroke="#5a6778" stroke-width="0.8"/>
+                  <!-- Center Claw (Longest) -->
+                  <path d="M78 95 Q75 145 81 210 L88 202 Q84 145 89 100 Z" fill="url(#silverClawGrad)" stroke="#5a6778" stroke-width="0.8"/>
+                  <!-- Right Claw -->
+                  <path d="M103 115 Q108 150 102 195 L96 190 Q101 150 97 120 Z" fill="url(#silverClawGrad)" stroke="#5a6778" stroke-width="0.8"/>
+                  <!-- Claw jagged rips -->
+                  <polygon points="56,140 50,143 55,146" fill="#738294"/>
+                  <polygon points="86,135 92,138 86,142" fill="#738294"/>
+                  <polygon points="104,160 110,163 105,166" fill="#738294"/>
+                </g>
+
+                <!-- Ultra Typography on Can -->
+                <text x="80" y="235" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="16" fill="#1e293b" letter-spacing="4">MONSTER</text>
+                <text x="80" y="250" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-weight="800" font-size="10" fill="#64748b" letter-spacing="4">ULTRA // ZERO</text>
+                
+                <!-- Frost condensation specks -->
+                <circle cx="38" cy="85" r="2" fill="#ffffff" opacity="0.9"/>
+                <circle cx="120" cy="100" r="2.5" fill="#ffffff" opacity="0.8"/>
+                <circle cx="42" cy="180" r="2.5" fill="#ffffff" opacity="0.9"/>
+                <circle cx="118" cy="225" r="3" fill="#ffffff" opacity="0.85"/>
+              </svg>
+            </div>
+            <div class="click-hint">CLICK TO CRACK ULTRA</div>
+          </div>
+
+          <div class="card-details">
+            <div class="item-title-row">
+              <h3 class="item-name">MONSTER ULTRA</h3>
+              <span class="unit-tag ultra-tag">ZERO ULTRA</span>
+            </div>
+            <p class="item-desc">Crisp, light citrus frost with zero sugar. The legendary white can engineered for sustained midnight coding velocity.</p>
+            
+            <div class="item-meta-grid">
+              <div class="meta-item">
+                <span class="meta-lbl">INVENTORY COUNT</span>
+                <span class="meta-val" id="qty-monster">4 CANS</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-lbl">TASTE PROFILE</span>
+                <span class="meta-val ultra-val">CRISP CITRUS [0 CAL]</span>
+              </div>
+            </div>
+
+            <div class="card-action-bar">
+              <button class="interact-action-btn ultra-btn" onclick="triggerSnackInteraction('monster')">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+                <span>POP ULTRA FROST</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ITEM 3: BLUE LAYS -->
+        <article class="snack-card lays-card" id="card-blue-lays" data-id="blue-lays">
+          <div class="card-glow-bg"></div>
+          <div class="card-header">
+            <span class="category-pill">CRUNCH PROTOCOL</span>
+            <span class="stock-pill status-badge" id="badge-blue-lays">IN STOCK</span>
+          </div>
+
+          <!-- Product Visual Container -->
+          <div class="visual-stage" id="stage-blue-lays" title="Click to crunch chips!">
+            <div class="stage-particles" id="particles-blue-lays"></div>
+            <!-- Custom Vector Blue Lays Bag -->
+            <div class="can-wrapper lays-pack">
+              <svg class="product-svg" viewBox="0 0 160 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="blueLaysGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#0062ff"/>
+                    <stop offset="35%" stop-color="#0047cc"/>
+                    <stop offset="70%" stop-color="#002b80"/>
+                    <stop offset="100%" stop-color="#001a4d"/>
+                  </linearGradient>
+                  <radialGradient id="sunburstGrad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#ffcc00"/>
+                    <stop offset="70%" stop-color="#ff9900"/>
+                    <stop offset="100%" stop-color="#cc6600"/>
+                  </radialGradient>
+                  <radialGradient id="chipGrad" cx="40%" cy="40%" r="60%">
+                    <stop offset="0%" stop-color="#ffe680"/>
+                    <stop offset="60%" stop-color="#ffb732"/>
+                    <stop offset="100%" stop-color="#c97e00"/>
+                  </radialGradient>
+                </defs>
+                <!-- Bag Drop Shadow -->
+                <ellipse cx="80" cy="285" rx="55" ry="10" fill="#000" opacity="0.5" />
+                <!-- Bag Body with crimped edges -->
+                <!-- Top crimp -->
+                <path d="M25 45 L30 40 L35 45 L40 40 L45 45 L50 40 L55 45 L60 40 L65 45 L70 40 L75 45 L80 40 L85 45 L90 40 L95 45 L100 40 L105 45 L110 40 L115 45 L120 40 L125 45 L130 40 L135 45 L135 55 L25 55 Z" fill="#003599"/>
+                <!-- Main Bag Body -->
+                <path d="M25 55 Q20 155 25 255 L135 255 Q140 155 135 55 Z" fill="url(#blueLaysGrad)" stroke="#00d2ff" stroke-width="1.5"/>
+                <!-- Bottom crimp -->
+                <path d="M25 255 L30 260 L35 255 L40 260 L45 255 L50 260 L55 255 L60 260 L65 255 L70 260 L75 255 L80 260 L85 255 L90 260 L95 255 L100 260 L105 255 L110 260 L115 255 L120 260 L125 255 L130 260 L135 255 Z" fill="#003599"/>
+                
+                <!-- Glossy Foil Reflection Sheen -->
+                <path d="M30 65 Q50 155 40 245 Q70 180 50 85 Z" fill="#ffffff" opacity="0.15"/>
+                <path d="M125 70 Q110 155 120 240 Q105 170 115 90 Z" fill="#ffffff" opacity="0.12"/>
+                
+                <!-- Iconic Yellow Sun / Logo Core -->
+                <circle cx="80" cy="125" r="36" fill="url(#sunburstGrad)" stroke="#ffffff" stroke-width="2"/>
+                <!-- Red Banner Curve across Sun -->
+                <path d="M35 125 Q80 145 125 125 L123 140 Q80 160 37 140 Z" fill="#e60000" stroke="#ffffff" stroke-width="1.2"/>
+                <text x="80" y="137" text-anchor="middle" font-family="'Syne', sans-serif" font-weight="900" font-size="21" fill="#ffffff" letter-spacing="1">Lay's</text>
+                
+                <!-- Magic Masala / Blue Flavor Label -->
+                <rect x="36" y="162" width="88" height="18" rx="4" fill="#00d2ff"/>
+                <text x="80" y="174" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-weight="800" font-size="9" fill="#001f5c" letter-spacing="1">MAGIC MASALA</text>
+
+                <!-- Floating Crispy Chips on Bag Visual -->
+                <!-- Chip 1 -->
+                <path d="M50 220 Q70 195 95 210 Q85 235 60 230 Z" fill="url(#chipGrad)" stroke="#c97e00" stroke-width="1"/>
+                <path d="M58 215 Q72 205 85 215" stroke="#a06000" stroke-width="1.2" fill="none"/>
+                <!-- Chip 2 -->
+                <path d="M85 225 Q110 205 125 228 Q105 245 90 238 Z" fill="url(#chipGrad)" stroke="#c97e00" stroke-width="1"/>
+                
+                <!-- Spices & Salt Flecks -->
+                <circle cx="65" cy="218" r="1.5" fill="#e60000"/>
+                <circle cx="80" cy="214" r="1.5" fill="#ffffff"/>
+                <circle cx="102" cy="224" r="1.5" fill="#e60000"/>
+                <circle cx="112" cy="220" r="1.2" fill="#ffffff"/>
+                <circle cx="72" cy="224" r="1" fill="#39ff14"/>
+              </svg>
+            </div>
+            <div class="click-hint">CLICK TO CRUNCH</div>
+          </div>
+
+          <div class="card-details">
+            <div class="item-title-row">
+              <h3 class="item-name">BLUE LAYS</h3>
+              <span class="unit-tag cyan-tag">MAGIC MASALA</span>
+            </div>
+            <p class="item-desc">Indian Magic Masala perfection. Spicy, tangy, deeply savory. Essential 3 AM crunch therapy.</p>
+            
+            <div class="item-meta-grid">
+              <div class="meta-item">
+                <span class="meta-lbl">INVENTORY COUNT</span>
+                <span class="meta-val" id="qty-blue-lays">5 BAGS</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-lbl">CRUNCH RATING</span>
+                <span class="meta-val crunch-val">MAXIMUM [10/10]</span>
+              </div>
+            </div>
+
+            <div class="card-action-bar">
+              <button class="interact-action-btn lays-btn" onclick="triggerSnackInteraction('blue-lays')">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                </svg>
+                <span>POP BAG CRUNCH</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: SQUAD STATUS (SHUBHAM, DARSHIL, KUSH) -->
+    <section class="section-container">
+      <div class="section-head">
+        <div class="head-left">
+          <span class="section-prefix">// 02</span>
+          <h2 class="section-title">NIGHT CODENAME ROSTER</h2>
+        </div>
+        <div class="head-right">
+          <span class="tag-pill">ACTIVE PROTOCOL: RADAR LIVE</span>
+        </div>
+      </div>
+
+      <div class="squad-grid">
+        
+        <!-- MEMBER 1: SHUBHAM -->
+        <article class="member-card" id="member-card-shubham" data-id="shubham">
+          <div class="member-card-inner">
+            <div class="member-top-row">
+              <div class="avatar-box">
+                <!-- Custom Technical Avatar (NO EMOJIS) -->
+                <div class="avatar-vector shubham-av">
+                  <svg viewBox="0 0 40 40" fill="none">
+                    <rect width="40" height="40" rx="8" fill="#12131c"/>
+                    <path d="M8 32 C8 24 16 22 20 22 C24 22 32 24 32 32" stroke="#00f0ff" stroke-width="2.5" stroke-linecap="round"/>
+                    <circle cx="20" cy="14" r="6" stroke="#00f0ff" stroke-width="2.5"/>
+                    <path d="M14 13 L26 13" stroke="#ff2a85" stroke-width="2"/>
+                  </svg>
+                </div>
+                <div class="status-indicator-dot" id="dot-shubham"></div>
+              </div>
+
+              <div class="member-identity">
+                <div class="member-handle">TEAM_OPERATOR_01</div>
+                <h3 class="member-name">SHUBHAM</h3>
+                <span class="member-role">SYS_ARCHITECT / NIGHT_LEAD</span>
+              </div>
+
+              <div class="member-badge-col">
+                <span class="activity-badge badge-active" id="badge-shubham">ACTIVE RN</span>
+              </div>
+            </div>
+
+            <div class="member-status-box">
+              <div class="box-tag">CURRENT TASK // ACTIVITY</div>
+              <p class="status-quote" id="quote-shubham">"Refactoring backend microservices with Monster Ultra in my veins"</p>
+            </div>
+
+            <div class="member-stats-row">
+              <div class="member-stat">
+                <span class="m-lbl">RATION PREFERENCE</span>
+                <span class="m-val highlight-green">MONSTER ULTRA</span>
+              </div>
+              <div class="member-stat">
+                <span class="m-lbl">LOCAL STATUS</span>
+                <span class="m-val" id="time-shubham">ONLINE [PULSING]</span>
+              </div>
+            </div>
+
+            <div class="member-actions">
+              <button class="ping-btn" onclick="pingMember('Shubham')">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
+                </svg>
+                <span>SEND PING SIGNAL</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- MEMBER 2: DARSHIL -->
+        <article class="member-card" id="member-card-darshil" data-id="darshil">
+          <div class="member-card-inner">
+            <div class="member-top-row">
+              <div class="avatar-box">
+                <div class="avatar-vector darshil-av">
+                  <svg viewBox="0 0 40 40" fill="none">
+                    <rect width="40" height="40" rx="8" fill="#12131c"/>
+                    <path d="M8 32 C8 24 16 22 20 22 C24 22 32 24 32 32" stroke="#c8ff00" stroke-width="2.5" stroke-linecap="round"/>
+                    <circle cx="20" cy="14" r="6" stroke="#c8ff00" stroke-width="2.5"/>
+                    <circle cx="17" cy="13" r="1.5" fill="#c8ff00"/>
+                    <circle cx="23" cy="13" r="1.5" fill="#c8ff00"/>
+                  </svg>
+                </div>
+                <div class="status-indicator-dot" id="dot-darshil"></div>
+              </div>
+
+              <div class="member-identity">
+                <div class="member-handle">TEAM_OPERATOR_02</div>
+                <h3 class="member-name">DARSHIL</h3>
+                <span class="member-role">ALGO_SOLVER / NIGHT_OWL</span>
+              </div>
+
+              <div class="member-badge-col">
+                <span class="activity-badge badge-active" id="badge-darshil">ACTIVE RN</span>
+              </div>
+            </div>
+
+            <div class="member-status-box">
+              <div class="box-tag">CURRENT TASK // ACTIVITY</div>
+              <p class="status-quote" id="quote-darshil">"Grinding dynamic programming problems & crunching Blue Lays"</p>
+            </div>
+
+            <div class="member-stats-row">
+              <div class="member-stat">
+                <span class="m-lbl">RATION PREFERENCE</span>
+                <span class="m-val highlight-blue">BLUE LAYS</span>
+              </div>
+              <div class="member-stat">
+                <span class="m-lbl">LOCAL STATUS</span>
+                <span class="m-val" id="time-darshil">ONLINE [PULSING]</span>
+              </div>
+            </div>
+
+            <div class="member-actions">
+              <button class="ping-btn" onclick="pingMember('Darshil')">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
+                </svg>
+                <span>SEND PING SIGNAL</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- MEMBER 3: KUSH -->
+        <article class="member-card" id="member-card-kush" data-id="kush">
+          <div class="member-card-inner">
+            <div class="member-top-row">
+              <div class="avatar-box">
+                <div class="avatar-vector kush-av">
+                  <svg viewBox="0 0 40 40" fill="none">
+                    <rect width="40" height="40" rx="8" fill="#12131c"/>
+                    <path d="M8 32 C8 24 16 22 20 22 C24 22 32 24 32 32" stroke="#ff2a85" stroke-width="2.5" stroke-linecap="round"/>
+                    <circle cx="20" cy="14" r="6" stroke="#ff2a85" stroke-width="2.5"/>
+                    <path d="M15 15 Q20 18 25 15" stroke="#ff2a85" stroke-width="2" fill="none"/>
+                  </svg>
+                </div>
+                <div class="status-indicator-dot inactive" id="dot-kush"></div>
+              </div>
+
+              <div class="member-identity">
+                <div class="member-handle">TEAM_OPERATOR_03</div>
+                <h3 class="member-name">KUSH</h3>
+                <span class="member-role">LOGISTICS_LEAD / DESIGNER</span>
+              </div>
+
+              <div class="member-badge-col">
+                <span class="activity-badge badge-inactive" id="badge-kush">AFK / RECHARGING</span>
+              </div>
+            </div>
+
+            <div class="member-status-box">
+              <div class="box-tag">CURRENT TASK // ACTIVITY</div>
+              <p class="status-quote" id="quote-kush">"Taking a power recharge nap. Do not disturb unless out of Diet Coke"</p>
+            </div>
+
+            <div class="member-stats-row">
+              <div class="member-stat">
+                <span class="m-lbl">RATION PREFERENCE</span>
+                <span class="m-val highlight-red">DIET COKE</span>
+              </div>
+              <div class="member-stat">
+                <span class="m-lbl">LOCAL STATUS</span>
+                <span class="m-val" id="time-kush">AFK [STANDBY]</span>
+              </div>
+            </div>
+
+            <div class="member-actions">
+              <button class="ping-btn" onclick="pingMember('Kush')">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
+                </svg>
+                <span>SEND PING SIGNAL</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: LATE NIGHT STUDY HUB ANIMATED TERMINAL -->
+    <section class="section-container terminal-section">
+      <div class="section-head">
+        <div class="head-left">
+          <span class="section-prefix">// 03</span>
+          <h2 class="section-title">MIDNIGHT VIBE GENERATOR</h2>
+        </div>
+        <div class="head-right">
+          <span class="tag-pill">INTERACTIVE ANIMATION PAD</span>
+        </div>
+      </div>
+
+      <div class="fun-interactive-board">
+        <div class="board-topbar">
+          <span class="dot-btn red"></span>
+          <span class="dot-btn yellow"></span>
+          <span class="dot-btn green"></span>
+          <span class="terminal-title">TERMINAL_DISPATCH // 3AM_LATE_NIGHT_SESSION</span>
+        </div>
+
+        <div class="board-content">
+          <div class="vibe-animation-scene" id="animation-scene">
+            <!-- Animated Study Desk & Ambient Elements -->
+            <div class="desk-container">
+              <!-- Floating study elements generated dynamically and SVG animated -->
+              <div class="floating-sticker sticker-caffeine">
+                <span class="sticker-text">CAFFEINE_SPIKE</span>
+              </div>
+              <div class="floating-sticker sticker-masala">
+                <span class="sticker-text">MASALA_CRUNCH</span>
+              </div>
+              <div class="floating-sticker sticker-focus">
+                <span class="sticker-text">HYPERFOCUS_ZONE</span>
+              </div>
+              <div class="study-ambient-graphic">
+                <svg class="study-svg" viewBox="0 0 320 180" fill="none">
+                  <!-- Desk surface -->
+                  <rect x="20" y="140" width="280" height="8" rx="2" fill="#2d3142"/>
+                  <rect x="40" y="148" width="10" height="30" fill="#1e202c"/>
+                  <rect x="270" y="148" width="10" height="30" fill="#1e202c"/>
+                  <!-- Glowing Laptop -->
+                  <path d="M90 140 L160 140 L155 100 L95 100 Z" fill="#181924" stroke="#00f0ff" stroke-width="2"/>
+                  <rect x="100" y="105" width="50" height="30" rx="2" fill="#0c1020" stroke="#00f0ff" stroke-width="1"/>
+                  <!-- Screen code lines -->
+                  <line x1="105" y1="112" x2="135" y2="112" stroke="#c8ff00" stroke-width="2"/>
+                  <line x1="105" y1="118" x2="142" y2="118" stroke="#00f0ff" stroke-width="2"/>
+                  <line x1="105" y1="124" x2="125" y2="124" stroke="#ff2a85" stroke-width="2"/>
+                  <line x1="105" y1="130" x2="138" y2="130" stroke="#39ff14" stroke-width="2"/>
+                  <!-- Screen light cone glow -->
+                  <polygon points="100,105 150,105 200,140 50,140" fill="#00f0ff" opacity="0.08"/>
+                  <!-- Monster Ultra Can on desk -->
+                  <rect x="180" y="112" width="14" height="28" rx="2" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+                  <line x1="184" y1="118" x2="190" y2="128" stroke="#64748b" stroke-width="1.5"/>
+                  <!-- Diet coke can on desk -->
+                  <rect x="202" y="115" width="14" height="25" rx="2" fill="#cbd0d8" stroke="#ff1a2a" stroke-width="1.5"/>
+                  <line x1="202" y1="125" x2="216" y2="125" stroke="#ff1a2a" stroke-width="2"/>
+                  <!-- Lay's Bag leaning on desk -->
+                  <polygon points="225,140 240,110 255,140" fill="#0047cc" stroke="#00d2ff" stroke-width="1.5"/>
+                  <circle cx="240" cy="128" r="4" fill="#ffcc00"/>
+                  <!-- Desk Lamp -->
+                  <path d="M50 140 L50 85 Q50 65 75 75" stroke="#ff2a85" stroke-width="3" fill="none"/>
+                  <polygon points="68,70 88,80 78,92" fill="#ff2a85"/>
+                  <polygon points="78,90 120,140 60,140" fill="#ffff55" opacity="0.12"/>
+                  <!-- Midnight Moon & stars out window -->
+                  <circle cx="265" cy="40" r="14" stroke="#c8ff00" stroke-width="2" fill="none"/>
+                  <circle cx="270" cy="38" r="12" fill="#080810"/>
+                  <path d="M220 30 L223 35 L228 35 L224 38 L226 43 L220 40 L214 43 L216 38 L212 35 L217 35 Z" fill="#ffffff" opacity="0.8"/>
+                  <path d="M160 25 L162 28 L166 28 L163 31 L164 35 L160 32 L156 35 L157 31 L154 28 L158 28 Z" fill="#c8ff00" opacity="0.8"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="vibe-triggers">
+            <button class="trigger-btn" onclick="spawnCaffeineStorm()">
+              <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+              <span>TRIGGER CAFFEINE STORM</span>
+            </button>
+            <button class="trigger-btn" onclick="spawnChipRain()">
+              <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15 9 22 12 15 15 12 22 9 15 2 12 9 9 12 2"></polygon>
+              </svg>
+              <span>SPAWN CHIP BLAST</span>
+            </button>
+            <button class="trigger-btn" onclick="spawnFizzyBubbles()">
+              <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="9"></circle>
+                <circle cx="10" cy="10" r="3"></circle>
+              </svg>
+              <span>UNLEASH FIZZ EXPLOSION</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-inner">
+        <div class="f-brand">
+          <span class="f-title">MIDNIGHT PANTRY // SQUAD STATION</span>
+          <span class="f-desc">Built for Shubham, Darshil, and Kush. Powered by Monster Ultra, Diet Coke & Blue Lays.</span>
+        </div>
+        <div class="f-links">
+          <button class="text-link" onclick="openAdminModal()">ADMIN CONSOLE</button>
+          <span class="divider">/</span>
+          <button class="text-link" onclick="resetToDefaults()">RESTORE DEFAULT STATE</button>
+        </div>
+      </div>
+      <div class="footer-footnote">
+        READY FOR GITHUB PAGES DIRECT DEPLOYMENT // ZERO EXTERNAL ASSET DEPENDENCIES
+      </div>
+    </footer>
+
+  </div><!-- /app-wrapper -->
+
+  <!-- ============================================== -->
+  <!-- MODAL 1: CLEAN SECURE ADMIN AUTHENTICATION     -->
+  <!-- ============================================== -->
+  <div class="modal-backdrop" id="admin-auth-modal">
+    <div class="modal-box auth-box">
+      <div class="modal-header">
+        <div class="modal-tag">ADMIN ACCESS</div>
+        <button class="modal-close-btn" onclick="closeAdminModals()">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="auth-icon-wrap">
+          <svg class="large-auth-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <h3 class="auth-title">ADMIN LOGIN</h3>
+        <p class="auth-desc">Enter administrator password to access console.</p>
+
+        <!-- Lockout Alert Banner (only shown during active rate-limit lockout) -->
+        <div id="lockout-warning-banner" class="lockout-banner" style="display:none;">
+          <svg class="icon-svg alert-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span id="lockout-time-text">LOCKOUT IN EFFECT</span>
+        </div>
+
+        <form id="admin-pin-form" onsubmit="handlePinSubmit(event)">
+          <div class="secure-input-group">
+            <input 
+              type="password" 
+              id="admin-pin-input" 
+              placeholder="ENTER PASSWORD" 
+              maxlength="40" 
+              autocomplete="off" 
+              autofocus 
+            />
+            <button type="button" class="eye-toggle-btn" id="toggle-auth-eye" onclick="togglePasswordVisibility('admin-pin-input', 'toggle-auth-eye')" title="Show / Hide Password">
+              <svg class="icon-svg eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <svg class="icon-svg eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+          
+          <p id="auth-error-msg" class="auth-error-msg"></p>
+
+          <div class="modal-btn-row">
+            <button type="button" class="btn-cancel" onclick="closeAdminModals()">CANCEL</button>
+            <button type="submit" id="auth-submit-btn" class="btn-submit">LOGIN</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL 2: ADMIN MANAGEMENT CONTROL PANEL       -->
+  <!-- ============================================== -->
+  <div class="modal-backdrop" id="admin-panel-modal">
+    <div class="modal-box admin-panel-box">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="modal-tag neon-green">ADMIN COMMAND CONSOLE [AUTHENTICATED]</div>
+          <span id="session-countdown-pill" class="session-pill">AUTO-LOCK: 10:00</span>
+        </div>
+        <button class="modal-close-btn" onclick="closeAdminModals()">
+          <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body admin-scroll-body">
+        
+        <!-- SECTION A: INVENTORY AVAILABILITY CONTROLS -->
+        <div class="admin-group">
+          <div class="group-title-row">
+            <span class="group-prefix">CTRL // 01</span>
+            <h4 class="group-title">RATION INVENTORY AVAILABILITY</h4>
+          </div>
+          
+          <div class="admin-controls-grid">
+
+            <!-- Diet Coke Control -->
+            <div class="ctrl-card" id="ctrl-diet-coke">
+              <div class="ctrl-header">
+                <span class="ctrl-name">DIET COKE</span>
+                <span class="status-indicator-mini" id="mini-coke-status">IN STOCK</span>
+              </div>
+              <div class="toggle-row">
+                <label class="switch">
+                  <input type="checkbox" id="toggle-stock-diet-coke" onchange="updateItemStock('diet-coke', this.checked)">
+                  <span class="slider"></span>
+                </label>
+                <span class="toggle-label" id="label-stock-diet-coke">AVAILABLE IN PANTRY</span>
+              </div>
+              <div class="qty-editor-row">
+                <label>COUNT / NOTE:</label>
+                <input type="text" id="input-qty-diet-coke" value="6 CANS" oninput="updateItemQty('diet-coke', this.value)" placeholder="e.g. 6 CANS" />
+              </div>
+            </div>
+
+            <!-- Monster Control -->
+            <div class="ctrl-card" id="ctrl-monster">
+              <div class="ctrl-header">
+                <span class="ctrl-name">MONSTER ULTRA</span>
+                <span class="status-indicator-mini" id="mini-monster-status">IN STOCK</span>
+              </div>
+              <div class="toggle-row">
+                <label class="switch">
+                  <input type="checkbox" id="toggle-stock-monster" onchange="updateItemStock('monster', this.checked)">
+                  <span class="slider"></span>
+                </label>
+                <span class="toggle-label" id="label-stock-monster">AVAILABLE IN PANTRY</span>
+              </div>
+              <div class="qty-editor-row">
+                <label>COUNT / NOTE:</label>
+                <input type="text" id="input-qty-monster" value="4 CANS" oninput="updateItemQty('monster', this.value)" placeholder="e.g. 4 CANS" />
+              </div>
+            </div>
+
+            <!-- Blue Lays Control -->
+            <div class="ctrl-card" id="ctrl-blue-lays">
+              <div class="ctrl-header">
+                <span class="ctrl-name">BLUE LAYS</span>
+                <span class="status-indicator-mini" id="mini-lays-status">IN STOCK</span>
+              </div>
+              <div class="toggle-row">
+                <label class="switch">
+                  <input type="checkbox" id="toggle-stock-blue-lays" onchange="updateItemStock('blue-lays', this.checked)">
+                  <span class="slider"></span>
+                </label>
+                <span class="toggle-label" id="label-stock-blue-lays">AVAILABLE IN PANTRY</span>
+              </div>
+              <div class="qty-editor-row">
+                <label>COUNT / NOTE:</label>
+                <input type="text" id="input-qty-blue-lays" value="5 BAGS" oninput="updateItemQty('blue-lays', this.value)" placeholder="e.g. 5 BAGS" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- SECTION B: SQUAD ACTIVE STATUS CONTROLS -->
+        <div class="admin-group">
+          <div class="group-title-row">
+            <span class="group-prefix">CTRL // 02</span>
+            <h4 class="group-title">SQUAD ACTIVE RADAR STATUS</h4>
+          </div>
+
+          <div class="admin-controls-grid">
+
+            <!-- Shubham Control -->
+            <div class="ctrl-card" id="ctrl-shubham">
+              <div class="ctrl-header">
+                <span class="ctrl-name">SHUBHAM</span>
+                <span class="status-indicator-mini active" id="mini-shubham-status">ACTIVE RN</span>
+              </div>
+              <div class="toggle-row">
+                <label class="switch">
+                  <input type="checkbox" id="toggle-active-shubham" onchange="updateMemberActive('shubham', this.checked)">
+                  <span class="slider"></span>
+                </label>
+                <span class="toggle-label" id="label-active-shubham">ONLINE & GRINDING</span>
+              </div>
+              <div class="qty-editor-row">
+                <label>CURRENT TASK STATUS:</label>
+                <input type="text" id="input-quote-shubham" value="Refactoring backend microservices with Monster in my veins" oninput="updateMemberQuote('shubham', this.value)" />
+              </div>
+            </div>
+
+            <!-- Darshil Control -->
+            <div class="ctrl-card" id="ctrl-darshil">
+              <div class="ctrl-header">
+                <span class="ctrl-name">DARSHIL</span>
+                <span class="status-indicator-mini active" id="mini-darshil-status">ACTIVE RN</span>
+              </div>
+              <div class="toggle-row">
+                <label class="switch">
+                  <input type="checkbox" id="toggle-active-darshil" onchange="updateMemberActive('darshil', this.checked)">
+                  <span class="slider"></span>
+                </label>
+                <span class="toggle-label" id="label-active-darshil">ONLINE & GRINDING</span>
+              </div>
+              <div class="qty-editor-row">
+                <label>CURRENT TASK STATUS:</label>
+                <input type="text" id="input-quote-darshil" value="Grinding dynamic programming problems & crunching Blue Lays" oninput="updateMemberQuote('darshil', this.value)" />
+              </div>
+            </div>
+
+            <!-- Kush Control -->
+            <div class="ctrl-card" id="ctrl-kush">
+              <div class="ctrl-header">
+                <span class="ctrl-name">KUSH</span>
+                <span class="status-indicator-mini inactive" id="mini-kush-status">AFK</span>
+              </div>
+              <div class="toggle-row">
+                <label class="switch">
+                  <input type="checkbox" id="toggle-active-kush" onchange="updateMemberActive('kush', this.checked)">
+                  <span class="slider"></span>
+                </label>
+                <span class="toggle-label" id="label-active-kush">ONLINE & GRINDING</span>
+              </div>
+              <div class="qty-editor-row">
+                <label>CURRENT TASK STATUS:</label>
+                <input type="text" id="input-quote-kush" value="Taking a power recharge nap. Do not disturb unless out of Diet Coke" oninput="updateMemberQuote('kush', this.value)" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- SECTION C: MASTER KEY SECURITY CONFIGURATION -->
+        <div class="admin-group">
+          <div class="group-title-row">
+            <span class="group-prefix">CTRL // 03</span>
+            <h4 class="group-title">SECURITY CREDENTIAL MANAGEMENT (UPDATE MASTER KEY)</h4>
+          </div>
+
+          <div class="security-card">
+            <p class="sec-card-desc">Must be at least 10 characters long, containing uppercase letters, lowercase letters, numbers, and symbols. Saved exclusively as a salted SHA-256 hash.</p>
+            
+            <form id="change-passcode-form" onsubmit="handleChangePasscode(event)">
+              <div class="change-pw-grid">
+                <div class="pw-field">
+                  <label>CURRENT SECURITY KEY:</label>
+                  <input type="password" id="current-key-input" placeholder="ENTER CURRENT KEY" autocomplete="off" required />
+                </div>
+                <div class="pw-field">
+                  <label>NEW 10+ CHAR SECURITY KEY:</label>
+                  <input type="password" id="new-key-input" placeholder="e.g. M!dn1ght#99" autocomplete="off" oninput="checkNewPasscodeStrength(this.value)" required />
+                </div>
+              </div>
+
+              <!-- Live Complexity Validator -->
+              <div class="complexity-checklist" id="complexity-checklist">
+                <div class="req-item" id="req-len">
+                  <span class="req-indicator">[-]</span>
+                  <span>10+ CHARACTERS</span>
+                </div>
+                <div class="req-item" id="req-upper">
+                  <span class="req-indicator">[-]</span>
+                  <span>UPPERCASE (A-Z)</span>
+                </div>
+                <div class="req-item" id="req-lower">
+                  <span class="req-indicator">[-]</span>
+                  <span>LOWERCASE (a-z)</span>
+                </div>
+                <div class="req-item" id="req-num">
+                  <span class="req-indicator">[-]</span>
+                  <span>NUMBER (0-9)</span>
+                </div>
+                <div class="req-item" id="req-sym">
+                  <span class="req-indicator">[-]</span>
+                  <span>SYMBOL (!@#$...)</span>
+                </div>
+              </div>
+
+              <div class="change-pw-action-row">
+                <button type="submit" class="btn-update-key">ENCRYPT & SAVE NEW MASTER KEY</button>
+                <span id="change-key-feedback" class="change-key-feedback"></span>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="admin-footer-bar">
+          <button class="btn-lock" onclick="lockAdminSession()">
+            <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span>LOCK & EXIT ADMIN MODE</span>
+          </button>
+          <button class="btn-save-close" onclick="closeAdminModals()">DONE [CHANGES SAVED]</button>
+        </div>
+
+      </div>
+    </div>
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
